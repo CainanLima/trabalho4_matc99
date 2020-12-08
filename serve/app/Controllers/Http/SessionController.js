@@ -9,6 +9,7 @@ class SessionController {
     const { email, password } = request.all()
 
     const hash = await auth.attempt(email, password)
+    if (!hash) return { message: "Erro de autenticação" }
     const token = crypto.randomBytes(10).toString("hex");
     const user = await User.findBy('email', email)
     user.token = token
@@ -18,7 +19,7 @@ class SessionController {
 
     await Mail.send(
       "emails.twofactor",
-      {username: user.username, codigo: token },
+      { username: user.username, codigo: token },
       (message) => {
         message
           .to(email)
@@ -27,15 +28,16 @@ class SessionController {
       }
     );
 
-    return { message: "Token enviado para seu email" }
-    // return hash
+    return { message: "Token enviado para seu email", token1: hash }
   }
 
   async login({ auth, request }) {
     const inputToken = request.only(["token"])
-    const user = await User.findBy('token', inputToken.token)
-    const lotsOfTokens = await auth.generate(user)
-    return lotsOfTokens
+    if (auth.user.token == inputToken.token) {
+      const user = await User.findBy('token', inputToken.token)
+      const lotsOfTokens = await auth.generate(user)
+      return lotsOfTokens
+    } else return { message: "Token Invalido" }
   }
 }
 

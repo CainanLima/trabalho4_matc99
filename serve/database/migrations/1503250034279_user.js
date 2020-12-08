@@ -10,7 +10,7 @@ class UserSchema extends Schema {
       table.string('username', 80).notNullable().unique()
       table.string('email', 254).notNullable().unique()
       table.string('password', 60).notNullable()
-      table.enu('role', ["admin", "commom", "special"]).notNullable()
+      table.enu('role', ["admin", "common", "special"]).notNullable()
       table.string('token')
       table.datetime('token_created')
       table.timestamps()
