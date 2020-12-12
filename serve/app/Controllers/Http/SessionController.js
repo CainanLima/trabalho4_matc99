@@ -16,7 +16,6 @@ class SessionController {
     user.token_created = new Date()
 
     await user.save()
-
     await Mail.send(
       "emails.twofactor",
       { username: user.username, codigo: token },
@@ -33,11 +32,12 @@ class SessionController {
 
   async login({ auth, request }) {
     const inputToken = request.only(["token"])
-    if (auth.user.token == inputToken.token) {
-      const user = await User.findBy('token', inputToken.token)
+    // if (auth.user.token == inputToken.token) {
+      const user = await User.findByOrFail('token', inputToken.token)
+      console.log(user)
       const lotsOfTokens = await auth.generate(user)
       return lotsOfTokens
-    } else return { message: "Token Invalido" }
+    // } else return { message: "Token Invalido" }
   }
 }
 

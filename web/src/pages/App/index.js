@@ -1,34 +1,41 @@
-import React, { Component, useState} from "react";
+import React, { Component, useState, useEffect} from "react";
 import { Link, withRouter } from "react-router-dom";
 
 // import Logo from "../../assets/airbnb-logo.svg";
 import api from "../../services/api";
+import { logout } from "../../services/auth"
 
 import {  Container } from "./styles";
 
-class App extends Component { 
-    state = {
-        role: ""
-    };
+function App ({history}) { 
+    const [state, setState] = useState("Carregando...")
 
-    loadRole = async e => {
-        e.preventDefault();
-        const { username } = this.state.viewport;
+    async function loadRole () {
         try {
             const response = await api.get("/main");
-            this.setState({ role: response })
+            setState(response.data.message)
         } catch (err) {
             console.log(err);
         }
     }
 
-    render() {
+    function sair (){
+        logout()
+        history.push("/")
+    }
+
+    useEffect (() => {
+        loadRole()
+    }, [])
+
         return (
             <Container>
-                <p>{this.state.role}</p>
+                <div>
+                <p>{state}</p>
+                <button type="submit" onClick={sair}>Log Out</button>
+                </div>
             </Container>
         );
-    }
 }
 
 export default withRouter(App);

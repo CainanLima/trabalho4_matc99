@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { Form, Container } from "./styles";
 // import Logo from "../../assets/airbnb-logo.svg";
 import api from "../../services/api";
-import { login, logout } from "../../services/auth";
+import { login } from "../../services/auth";
 
 
 
@@ -18,10 +18,8 @@ class ConfirmToken extends Component {
     if (!token) {
       this.setState({ error: "Preencha o código de acesso para continuar!" });
     } else {
-      console.log(token)
       try {
         const response = await api.post("/login", { token });
-        logout()
         login(response.data.token)
         this.props.history.push("/app")
       } catch (err) {
@@ -32,6 +30,12 @@ class ConfirmToken extends Component {
       }
     }
   };
+
+  componentDidMount(){
+    if(!this.props.location?.state?.showRoute)
+    this.props.history.push("/")
+    // console.log(this.props)
+  }
 
   render() {
     return (

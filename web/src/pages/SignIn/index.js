@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 
-// import Logo from "../../assets/airbnb-logo.svg";
 import api from "../../services/api";
-import { login } from "../../services/auth";
 
 import { Form, Container } from "./styles";
 
@@ -22,8 +20,8 @@ class SignIn extends Component {
     } else {
       try {
         const response = await api.post("/sessions", { email, password });
-        login(response.data.token);
-        this.props.history.push("/confirmtoken");
+        if (response)
+          this.props.history.push("/confirmtoken", { showRoute: true });
       } catch (err) {
         this.setState({
           error:

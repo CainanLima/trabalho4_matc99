@@ -26,7 +26,7 @@ const Routes = () => (
     <Switch>
       <Route exact path="/" component={SignIn} />
       <Route path="/signup" component={SignUp} />
-      <PrivateRoute path="/confirmtoken" component={ConfirmToken} />
+      <Route path="/confirmtoken" component={ConfirmToken} />
       <PrivateRoute path="/app" component={App} />
       <Route path="*" component={() => <h1>Page not found</h1>} />
     </Switch>
