@@ -1,7 +1,6 @@
 import React, { Component, useState, useEffect} from "react";
 import { Link, withRouter } from "react-router-dom";
 
-// import Logo from "../../assets/airbnb-logo.svg";
 import api from "../../services/api";
 import { logout } from "../../services/auth"
 

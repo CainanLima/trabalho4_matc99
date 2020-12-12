@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Form, Container } from "./styles";
-// import Logo from "../../assets/airbnb-logo.svg";
+import Logo from "../../assets/logo.png";
 import api from "../../services/api";
 import { login } from "../../services/auth";
 
@@ -31,9 +31,9 @@ class ConfirmToken extends Component {
     }
   };
 
-  componentDidMount(){
-    if(!this.props.location?.state?.showRoute)
-    this.props.history.push("/")
+  componentDidMount() {
+    if (!this.props.location?.state?.showRoute)
+      this.props.history.push("/")
     // console.log(this.props)
   }
 
@@ -41,7 +41,7 @@ class ConfirmToken extends Component {
     return (
       <Container>
         <Form onSubmit={this.handleConfirmToken}>
-          <img src="/" alt="Airbnb logo" />
+          <img src={Logo} alt="Logo Genérico" />
           {this.state.error && <p>{this.state.error}</p>}
           <input
             type="text"

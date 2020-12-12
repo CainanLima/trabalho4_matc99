@@ -5,6 +5,8 @@ import api from "../../services/api";
 
 import { Form, Container } from "./styles";
 
+import Logo from "../../assets/logo.png";
+
 class SignIn extends Component {
   state = {
     email: "",
@@ -35,7 +37,7 @@ class SignIn extends Component {
     return (
       <Container>
         <Form onSubmit={this.handleSignIn}>
-          <img src="/" alt="Airbnb logo" />
+          <img src={Logo} alt="Logo Genérico" />
           {this.state.error && <p>{this.state.error}</p>}
           <input
             type="email"
